@@ -1,0 +1,15 @@
+IESD prática02
+
+1) Identificar de forma clara o problema com asserções simples
+ O problema com asserções simples é que 1 ou + clientes tentam aceder a 1 vetor ao mesmo tempo, ocorrendo uma perda de dados e inconsistência dos mesmos a longo prazo.    
+
+2) Relacionar com o conceito de transação aprendido no contexto dos sistemas de gestão de bases de dados;
+Uma transação é uma sequência de operações de banco de dados que satisfaz as propriedades ACID(Atomicidade, Consistência, Isolação, Durabilidade). O problema anterior ocorre
+pois essas propriedades não são cumpridas, pois todas as transações não são realizadas de forma atómica quando o cliente faz uma transação o outro cliente está a começar a 
+dele e assim por adiante, se um servidor com o vetor falhar não existe maneira de que as transações efetuadas persistem nesse mesmo vetor, a transação do cliente 2 não é
+independente da transação do cliente 1 
+Quando ocorre uma transação o processo inicia-se com estado "Begin" indicando que está pronto para ocorrer a transação, o processo após efetuar as suas operações
+após estas ocorrerem é possível transitar para 2 estados "Commit" para que seja validada a transação ou "abort/rollback".
+3) Delinear uma potencial abordagem simplificada, mesmo que envolva aspetos de implementação específicos, “hard-coded”. Não esquecer como pode ser validado o invariante.
+É necessário um Transaction Manager capaz de coordenar as transações sobre os 2 vetores. 
+4) Validação da abordagem com base nos dois sistemas informáticos fornecidos, ISyVector e ISyVectorCli
