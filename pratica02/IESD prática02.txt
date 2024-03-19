@@ -5,11 +5,9 @@ IESD prática02
 
 2) Relacionar com o conceito de transação aprendido no contexto dos sistemas de gestão de bases de dados;
 Uma transação é uma sequência de operações de banco de dados que satisfaz as propriedades ACID(Atomicidade, Consistência, Isolação, Durabilidade). O problema anterior ocorre
-pois essas propriedades não são cumpridas, pois todas as transações não são realizadas de forma atómica quando o cliente faz uma transação o outro cliente está a começar a 
-dele e assim por adiante, se um servidor com o vetor falhar não existe maneira de que as transações efetuadas persistem nesse mesmo vetor, a transação do cliente 2 não é
-independente da transação do cliente 1 
-Quando ocorre uma transação o processo inicia-se com estado "Begin" indicando que está pronto para ocorrer a transação, o processo após efetuar as suas operações
-após estas ocorrerem é possível transitar para 2 estados "Commit" para que seja validada a transação ou "abort/rollback".
+pois essas propriedades não são cumpridas, pois não é garantido que as operações de uma transação sejam realizadas de forma atómica, as transações não são isoladas entre si ocorrendo assim por exemplo a leitura dos mesmos dados duas vezes, contribuindo assim para a inconsistência de dados. Caso um dos serviços falhe os efeitos das transações feitas previamente não são garantidas.  
+
 3) Delinear uma potencial abordagem simplificada, mesmo que envolva aspetos de implementação específicos, “hard-coded”. Não esquecer como pode ser validado o invariante.
-É necessário um Transaction Manager capaz de coordenar as transações sobre os 2 vetores. 
+É necessário um Transaction Manager(TM) capaz de coordenar as transações sobre os 2 vetores. Inicia com o protocolo 2 phase commit(2PC), na 1ª fase envia uma mensagem aos vetores registados que se preparem, caso respondem afirmativamente, o TM passa para a 2ª fase, no caso de algum vetor responder negativamente o TM aborta a transação. Na 2ª fase o TM notifica os vetores se a transação foi abortada(aborted) ou confirmada(commited), permitindo assim o funcionamento em caso de avaria de um dos serviços. Para garantir o isolamento e atomicidade das transações pode usar mecanismos de bloqueio garantindo que diferentes transações não acessem o mesmo vetor simultaneamente. Garante a durabilidade das transações através de um registo de todas as operações realizadas como parte de uma transação.
+  
 4) Validação da abordagem com base nos dois sistemas informáticos fornecidos, ISyVector e ISyVectorCli
